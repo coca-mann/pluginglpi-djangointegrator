@@ -5,3 +5,5 @@ vendor/
 *.min.*
 var
 .github
+inc/defines.php
+.vscode

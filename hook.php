@@ -31,11 +31,13 @@
  * -------------------------------------------------------------------------
  */
 
+
 /**
  * Plugin install process
  */
 function plugin_djangointegrator_install(): bool
 {
+    //do stuff on install
     return true;
 }
 
@@ -44,5 +46,28 @@ function plugin_djangointegrator_install(): bool
  */
 function plugin_djangointegrator_uninstall(): bool
 {
+    //do stuff on uninstall
     return true;
+}
+
+/**
+ * Redefine the menus to add the Django App link.
+ *
+ * @param array $menus
+ *
+ * @return array
+ */
+function plugin_djangointegrator_redefine_menus(array $menus = []): array
+{
+    // Check if the 'tools' menu exists
+    if (isset($menus['tools'])) {
+        // Add a new menu item to the 'tools' menu
+        $menus['tools']['content']['djangointegrator'] = [
+            'title' => __('Django App', 'djangointegrator'),
+            'page'  => '/plugins/djangointegrator/front/main.php',
+            'icon'  => 'fas fa-rocket',
+        ];
+    }
+
+    return $menus;
 }

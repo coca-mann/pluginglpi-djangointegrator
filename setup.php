@@ -31,22 +31,19 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Plugin\Hooks;
+
 /** @phpstan-ignore theCodingMachineSafe.function (safe to assume this isn't already defined) */
-define('PLUGIN_DJANGOINTEGRATOR_VERSION', '0.0.1');
+define('PLUGIN_DJANGOINTEGRATOR_VERSION', '1.0.0');
 
 // Minimal GLPI version, inclusive
 /** @phpstan-ignore theCodingMachineSafe.function (safe to assume this isn't already defined) */
-define("PLUGIN_DJANGOINTEGRATOR_MIN_GLPI_VERSION", "11.0.0");
+define("PLUGIN_DJANGOINTEGRATOR_MIN_GLPI_VERSION", "10.0.0");
 
 // Maximum GLPI version, exclusive
 /** @phpstan-ignore theCodingMachineSafe.function (safe to assume this isn't already defined) */
 define("PLUGIN_DJANGOINTEGRATOR_MAX_GLPI_VERSION", "11.0.99");
 
-/**
- * Init hooks of the plugin.
- * REQUIRED
- */
-function plugin_init_djangointegrator(): void {}
 
 /**
  * Get the name and the version of the plugin
@@ -71,9 +68,9 @@ function plugin_version_djangointegrator(): array
     return [
         'name'           => 'DjangoIntegrator',
         'version'        => PLUGIN_DJANGOINTEGRATOR_VERSION,
-        'author'         => '<a href="http://www.teclib.com">Teclib\'</a>',
-        'license'        => '',
-        'homepage'       => '',
+        'author'         => 'ControleAtivo',
+        'license'        => 'MIT',
+        'homepage'       => 'https://github.com/pluginsGLPI/djangointegrator',
         'requirements'   => [
             'glpi' => [
                 'min' => PLUGIN_DJANGOINTEGRATOR_MIN_GLPI_VERSION,
@@ -81,6 +78,19 @@ function plugin_version_djangointegrator(): array
             ],
         ],
     ];
+}
+
+/**
+ * Init hooks of the plugin.
+ * REQUIRED
+ */
+function plugin_init_djangointegrator()
+{
+    global $PLUGIN_HOOKS;
+
+    // Register hooks
+    $PLUGIN_HOOKS['csrf_compliant']['djangointegrator'] = true;
+    $PLUGIN_HOOKS[Hooks::REDEFINE_MENUS]['djangointegrator'] = 'plugin_djangointegrator_redefine_menus';
 }
 
 /**
